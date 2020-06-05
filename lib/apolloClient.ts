@@ -1,12 +1,12 @@
 import { useMemo } from "react";
 import { ApolloClient } from "apollo-client";
-import { InMemoryCache } from "apollo-cache-inmemory";
+import { InMemoryCache, NormalizedCacheObject } from "apollo-cache-inmemory";
 import { HttpLink } from "apollo-link-http";
 
-let apolloClient;
+let apolloClient: ApolloClient<NormalizedCacheObject | null>;
 
 function createApolloClient() {
-  return new ApolloClient({
+  const client = new ApolloClient({
     ssrMode: typeof window === "undefined",
     link: new HttpLink({
       uri: "https://api.graph.cool/simple/v1/cixmkt2ul01q00122mksg82pn", // Server URL (must be absolute)
@@ -14,6 +14,7 @@ function createApolloClient() {
     }),
     cache: new InMemoryCache(),
   });
+  return client;
 }
 
 export function initializeApollo(initialState = null) {
@@ -32,7 +33,7 @@ export function initializeApollo(initialState = null) {
   return _apolloClient;
 }
 
-export function useApollo(initialState) {
+export function useApollo(initialState: any) {
   const store = useMemo(() => initializeApollo(initialState), [initialState]);
   return store;
 }

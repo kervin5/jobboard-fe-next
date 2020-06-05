@@ -1,7 +1,6 @@
-import React from "react";
-
+import React, { ComponentClass } from "react";
 import Head from "next/head";
-// import { ThemeProvider, createGlobalStyle } from "styled-components";
+import DefaultLayout from "../components/layout/dafault";
 import {
   ThemeProvider as StyledThemeProvider,
   createGlobalStyle,
@@ -29,16 +28,35 @@ export const theme: ITheme = {
 };
 
 const GlobalStyle = createGlobalStyle<IThemeWrapper>`
+  html,
+  body {
+    padding: 0;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+      Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+      sans-serif;
+  }
 
+  * {
+    box-sizing: border-box;
+  }
 `;
-export default function App({ Component, pageProps, router }) {
+export default function App({
+  Component,
+  pageProps,
+  router,
+}: {
+  Component: ComponentClass;
+  pageProps: any;
+  router: any;
+}) {
   const apolloClient = useApollo(pageProps.initialApolloState);
 
   React.useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector("#jss-server-side");
     if (jssStyles) {
-      jssStyles.parentElement.removeChild(jssStyles);
+      jssStyles?.parentElement?.removeChild(jssStyles);
     }
   }, []);
 
@@ -64,7 +82,9 @@ export default function App({ Component, pageProps, router }) {
         {/* <MainLayout> */}
         <GlobalStyle />
         <ApolloProvider client={apolloClient}>
-          <Component {...pageProps}></Component>
+          <DefaultLayout>
+            <Component {...pageProps}></Component>
+          </DefaultLayout>
         </ApolloProvider>
         {/* </MainLayout> */}
       </MaterialThemeProvider>
