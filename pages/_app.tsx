@@ -1,7 +1,15 @@
 import React from "react";
 
 import Head from "next/head";
-import { ThemeProvider, createGlobalStyle } from "styled-components";
+// import { ThemeProvider, createGlobalStyle } from "styled-components";
+import {
+  ThemeProvider as StyledThemeProvider,
+  createGlobalStyle,
+} from "styled-components";
+import {
+  ThemeProvider as MaterialThemeProvider,
+  createMuiTheme,
+} from "@material-ui/core/styles";
 import { ApolloProvider } from "@apollo/react-hooks";
 import { useApollo } from "../lib/apolloClient";
 // import MainLayout from "../components/layout/main";
@@ -17,6 +25,7 @@ export interface IThemeWrapper {
 
 export const theme: ITheme = {
   niceBlack: "#001F3F",
+  ...createMuiTheme(),
 };
 
 const GlobalStyle = createGlobalStyle<IThemeWrapper>`
@@ -33,30 +42,32 @@ export default function App({ Component, pageProps, router }) {
     }
   }, []);
 
-  if (router.pathname.startsWith("/dashboard")) {
-    return (
-      <ThemeProvider theme={theme}>
+  // if (router.pathname.startsWith("/dashboard")) {
+  //   return (
+  //     <ThemeProvider theme={theme}>
+  //       <GlobalStyle />
+  //       {/* <AdminLayout> */}
+  //       <ApolloProvider client={apolloClient}>
+  //         <Component {...pageProps}></Component>
+  //       </ApolloProvider>
+  //       {/* </AdminLayout> */}
+  //     </ThemeProvider>
+  //   );
+  // }
+
+  return (
+    <StyledThemeProvider theme={theme}>
+      <MaterialThemeProvider theme={theme}>
+        <Head>
+          <title>Find Jobs</title>
+        </Head>
+        {/* <MainLayout> */}
         <GlobalStyle />
-        {/* <AdminLayout> */}
         <ApolloProvider client={apolloClient}>
           <Component {...pageProps}></Component>
         </ApolloProvider>
-        {/* </AdminLayout> */}
-      </ThemeProvider>
-    );
-  }
-
-  return (
-    <ThemeProvider theme={theme}>
-      <Head>
-        <title>Find Jobs</title>
-      </Head>
-      {/* <MainLayout> */}
-      <GlobalStyle />
-      <ApolloProvider client={apolloClient}>
-        <Component {...pageProps}></Component>
-      </ApolloProvider>
-      {/* </MainLayout> */}
-    </ThemeProvider>
+        {/* </MainLayout> */}
+      </MaterialThemeProvider>
+    </StyledThemeProvider>
   );
 }

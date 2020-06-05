@@ -1,49 +1,33 @@
 import React from "react";
-import Document, { Head, Main, NextScript } from "next/document";
-import { ServerStyleSheet } from "styled-components";
-
-export default class MyDocument extends Document<any> {
+import NextDocument from "next/document";
+import { ServerStyleSheet as StyledComponentSheets } from "styled-components";
+import { ServerStyleSheets as MaterialUiServerStyleSheets } from "@material-ui/core/styles";
+export default class Document extends NextDocument {
   static async getInitialProps(ctx) {
-    const sheet = new ServerStyleSheet();
+    const styledComponentSheet = new StyledComponentSheets();
+    const materialUiSheets = new MaterialUiServerStyleSheets();
     const originalRenderPage = ctx.renderPage;
-
     try {
-      // wraps the collectStyles provider around our <App />.
       ctx.renderPage = () =>
         originalRenderPage({
           enhanceApp: (App) => (props) =>
-            sheet.collectStyles(<App {...props} />),
+            styledComponentSheet.collectStyles(
+              materialUiSheets.collect(<App {...props} />)
+            ),
         });
-
-      // extract the initial props that may be present.
-      const initialProps = await Document.getInitialProps(ctx);
-
-      // returning the original props together with our styled components.
+      const initialProps = await NextDocument.getInitialProps(ctx);
       return {
         ...initialProps,
-        styles: (
-          <>
+        styles: [
+          <React.Fragment key="styles">
             {initialProps.styles}
-            {sheet.getStyleElement()}
-          </>
-        ),
+            {materialUiSheets.getStyleElement()}
+            {styledComponentSheet.getStyleElement()}
+          </React.Fragment>,
+        ],
       };
     } finally {
-      sheet.seal();
+      styledComponentSheet.seal();
     }
-  }
-
-  render() {
-    return (
-      <html>
-        <Head>
-          {this.props.styleTags /*rendering the actually stylesheet*/}
-        </Head>
-        <body>
-          <Main />
-          <NextScript />
-        </body>
-      </html>
-    );
   }
 }
