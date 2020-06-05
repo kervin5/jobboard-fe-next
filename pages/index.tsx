@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
+// import { initializeApollo } from '../lib/apolloClient'
 
 export default function Home() {
   return (
@@ -216,3 +217,20 @@ export default function Home() {
     </div>
   );
 }
+
+//static SSG
+// export async function getStaticProps() {
+//   const apolloClient = initializeApollo()
+
+//   await apolloClient.query({
+//     query: ALL_POSTS_QUERY,
+//     variables: allPostsQueryVars,
+//   })
+
+//   return {
+//     props: {
+//       initialApolloState: apolloClient.cache.extract(),
+//     },
+//     unstable_revalidate: 1,
+//   }
+// }

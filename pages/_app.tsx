@@ -1,7 +1,9 @@
 import React from "react";
-import App from "next/app";
+
 import Head from "next/head";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
+import { ApolloProvider } from "@apollo/react-hooks";
+import { useApollo } from "../lib/apolloClient";
 // import MainLayout from "../components/layout/main";
 // import AdminLayout from "../components/layout/admin";
 
@@ -23,32 +25,32 @@ const GlobalStyle = createGlobalStyle<IThemeWrapper>`
     color: ${(props) => props.theme.niceBlack}; 
   }
 `;
-class MyApp extends App {
-  render() {
-    const { Component, pageProps, router } = this.props;
-    if (router.pathname.startsWith("/dashboard")) {
-      return (
-        <ThemeProvider theme={theme}>
-          <GlobalStyle />
-          {/* <AdminLayout> */}
-          <Component {...pageProps}></Component>
-          {/* </AdminLayout> */}
-        </ThemeProvider>
-      );
-    }
-
+export default function App({ Component, pageProps, router }) {
+  const apolloClient = useApollo(pageProps.initialApolloState);
+  if (router.pathname.startsWith("/dashboard")) {
     return (
       <ThemeProvider theme={theme}>
-        <Head>
-          <title>Find Jobs</title>
-        </Head>
-        {/* <MainLayout> */}
         <GlobalStyle />
-        <Component {...pageProps}></Component>
-        {/* </MainLayout> */}
+        {/* <AdminLayout> */}
+        <ApolloProvider client={apolloClient}>
+          <Component {...pageProps}></Component>
+        </ApolloProvider>
+        {/* </AdminLayout> */}
       </ThemeProvider>
     );
   }
-}
 
-export default MyApp;
+  return (
+    <ThemeProvider theme={theme}>
+      <Head>
+        <title>Find Jobs</title>
+      </Head>
+      {/* <MainLayout> */}
+      <GlobalStyle />
+      <ApolloProvider client={apolloClient}>
+        <Component {...pageProps}></Component>
+      </ApolloProvider>
+      {/* </MainLayout> */}
+    </ThemeProvider>
+  );
+}
