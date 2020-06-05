@@ -20,13 +20,19 @@ export const theme: ITheme = {
 };
 
 const GlobalStyle = createGlobalStyle<IThemeWrapper>`
-  body {
-    margin: 0 auto;
-    color: ${(props) => props.theme.niceBlack}; 
-  }
+
 `;
 export default function App({ Component, pageProps, router }) {
   const apolloClient = useApollo(pageProps.initialApolloState);
+
+  React.useEffect(() => {
+    // Remove the server-side injected CSS.
+    const jssStyles = document.querySelector("#jss-server-side");
+    if (jssStyles) {
+      jssStyles.parentElement.removeChild(jssStyles);
+    }
+  }, []);
+
   if (router.pathname.startsWith("/dashboard")) {
     return (
       <ThemeProvider theme={theme}>
