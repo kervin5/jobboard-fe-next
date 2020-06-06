@@ -1,5 +1,4 @@
 import React, { ReactElement } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 
 import styled from "styled-components";
 import Header from "./elements/header";

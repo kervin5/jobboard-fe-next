@@ -1,6 +1,6 @@
 import React, { ComponentClass } from "react";
 import Head from "next/head";
-import DefaultLayout from "../components/layout/dafault";
+import DefaultLayout from "@/components/layout/dafault";
 import {
   ThemeProvider as StyledThemeProvider,
   createGlobalStyle,
@@ -11,8 +11,8 @@ import {
 } from "@material-ui/core/styles";
 import { ApolloProvider } from "@apollo/client";
 import { useApollo } from "../lib/apolloClient";
-// import MainLayout from "../components/layout/main";
-// import AdminLayout from "../components/layout/admin";
+// import MainLayout from "@/compmponents/layout/main";
+// import AdminLayout from "@/compmponents/layout/admin";
 
 export interface ITheme {
   niceBlack: string;

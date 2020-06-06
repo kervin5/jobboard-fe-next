@@ -4,9 +4,9 @@ import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
-import HeroSection from "../components/layout/elements/heroSection";
-import JobsList from "../components/ui/jobs/jobsList";
-import { initializeApollo } from "../lib/apolloClient";
+import HeroSection from "@/components/layout/elements/heroSection";
+import JobsList from "@/components/ui/jobs/jobsList";
+import { initializeApollo } from "@/lib/apolloClient";
 import { gql } from "@apollo/client";
 
 const useStyles = makeStyles((theme) => ({
