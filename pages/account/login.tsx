@@ -1,12 +1,8 @@
 import React from "react";
-import SignIn from "../../components/signIn";
+import LogInForm from "../../components/ui/account/logInForm";
 
-const login = () => {
-  return (
-    <div>
-      <SignIn />
-    </div>
-  );
+const loginPage = () => {
+  return <LogInForm />;
 };
 
-export default login;
+export default loginPage;

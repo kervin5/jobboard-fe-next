@@ -17,7 +17,6 @@
     "clsx": "latest",
     "graphql": "^14.0.2",
     "graphql-tag": "2.10.3",
-    "markdown-to-jsx": "^6.11.4",
     "next": "9.4.4",
     "react": "16.13.1",
     "react-dom": "16.13.1",

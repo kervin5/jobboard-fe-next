@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function signInSide() {
+export default function logInForm() {
   const classes = useStyles();
 
   return (
