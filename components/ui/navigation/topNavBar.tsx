@@ -20,6 +20,7 @@ import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Link from "@material-ui/core/Link";
+import styled from "styled-components";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -41,9 +42,10 @@ const useStyles = makeStyles((theme: Theme) =>
     search: {
       position: "relative",
       borderRadius: theme.shape.borderRadius,
-      backgroundColor: fade(theme.palette.common.white, 0.15),
+      backgroundColor: theme.palette.background.default,
       "&:hover": {
-        backgroundColor: fade(theme.palette.common.white, 0.25),
+        // backgroundColor: fade(theme.palette.common.black, 0.25),
+        backgroundColor: theme.palette.background.default,
       },
       marginRight: theme.spacing(2),
       marginLeft: 0,
@@ -89,6 +91,17 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
+
+const StyledTopNavBar = styled.div`
+  flex-grow: 1;
+  .MuiAppBar-root {
+    background-color: ${(props) => props.theme.palette.common.white};
+    box-shadow: none;
+    color: ${(props) => props.theme.palette.text.primary};
+    border-bottom: 2px solid
+      ${(props) => props.theme.palette.background.default};
+  }
+`;
 
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
@@ -176,7 +189,7 @@ export default function PrimarySearchAppBar() {
   );
 
   return (
-    <div className={classes.grow}>
+    <StyledTopNavBar className="TopNavBar">
       <AppBar position="fixed">
         <Toolbar>
           <IconButton
@@ -224,9 +237,9 @@ export default function PrimarySearchAppBar() {
             </Link>
             <Link
               variant="button"
-              color="textPrimary"
               href="#"
               className={classes.link}
+              color="inherit"
             >
               Support
             </Link>
@@ -268,6 +281,6 @@ export default function PrimarySearchAppBar() {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
-    </div>
+    </StyledTopNavBar>
   );
 }

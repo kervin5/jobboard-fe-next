@@ -1,49 +1,62 @@
 import React from "react";
-import NextDocument, { Head, Main, NextScript } from "next/document";
-import { ServerStyleSheet as StyledComponentSheets } from "styled-components";
-import { ServerStyleSheets as MaterialUiServerStyleSheets } from "@material-ui/core/styles";
+import Document, { Head, Main, NextScript } from "next/document";
+import { ServerStyleSheet } from "styled-components";
+import { ServerStyleSheets } from "@material-ui/styles";
 
-export default class Document extends NextDocument<any> {
+class MyDocument extends Document {
   static async getInitialProps(ctx: any) {
-    const styledComponentSheet = new StyledComponentSheets();
-    const materialUiSheets = new MaterialUiServerStyleSheets();
+    const styledComponentsSheet = new ServerStyleSheet();
+    const materialSheets = new ServerStyleSheets();
     const originalRenderPage = ctx.renderPage;
 
     try {
       ctx.renderPage = () =>
         originalRenderPage({
           enhanceApp: (App: any) => (props: any) =>
-            styledComponentSheet.collectStyles(
-              materialUiSheets.collect(<App {...props} />)
+            styledComponentsSheet.collectStyles(
+              materialSheets.collect(<App {...props} />)
             ),
         });
-
-      const initialProps = await NextDocument.getInitialProps(ctx);
-
+      const initialProps = await Document.getInitialProps(ctx);
       return {
         ...initialProps,
-        styles: [
-          <React.Fragment key="styles">
+        styles: (
+          <React.Fragment>
             {initialProps.styles}
-            {materialUiSheets.getStyleElement()}
-            {styledComponentSheet.getStyleElement()}
-          </React.Fragment>,
-        ],
+            {materialSheets.getStyleElement()}
+            {styledComponentsSheet.getStyleElement()}
+          </React.Fragment>
+        ),
       };
     } finally {
-      styledComponentSheet.seal();
+      styledComponentsSheet.seal();
     }
   }
 
-  render() {
-    return (
-      <html>
-        <Head>{this.props.styleTags}</Head>
-        <body>
-          <Main />
-          <NextScript />
-        </body>
-      </html>
-    );
-  }
+  // render() {
+  //   return (
+  //     <html lang="en" dir="ltr">
+  //       <Head>
+  //         <meta charSet="utf-8" />
+  //         {/* Use minimum-scale=1 to enable GPU rasterization */}
+  //         <meta
+  //           name="viewport"
+  //           content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
+  //         />
+  //         {/* PWA primary color */}
+
+  //         <link
+  //           rel="stylesheet"
+  //           href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+  //         />
+  //       </Head>
+  //       <body>
+  //         <Main />
+  //         <NextScript />
+  //       </body>
+  //     </html>
+  //   );
+  // }
 }
+
+export default MyDocument;

@@ -16,6 +16,7 @@ import { useApollo } from "../lib/apolloClient";
 
 export interface ITheme {
   niceBlack: string;
+  primary: string;
 }
 
 export interface IThemeWrapper {
@@ -23,8 +24,9 @@ export interface IThemeWrapper {
 }
 
 export const theme: ITheme = {
-  niceBlack: "#001F3F",
   ...createMuiTheme(),
+  niceBlack: "#001F3F",
+  primary: "green",
 };
 
 const GlobalStyle = createGlobalStyle<IThemeWrapper>`
@@ -79,14 +81,12 @@ export default function App({
         <Head>
           <title>Find Jobs</title>
         </Head>
-        {/* <MainLayout> */}
         <GlobalStyle />
         <ApolloProvider client={apolloClient}>
           <DefaultLayout>
             <Component {...pageProps}></Component>
           </DefaultLayout>
         </ApolloProvider>
-        {/* </MainLayout> */}
       </MaterialThemeProvider>
     </StyledThemeProvider>
   );
