@@ -57,3 +57,21 @@ export default function HomePage(props: { children: ReactElement }) {
     </>
   );
 }
+
+//DO NOT DELETE
+//static SSG
+// export async function getStaticProps() {
+//   const apolloClient = initializeApollo()
+
+//   await apolloClient.query({
+//     query: ALL_POSTS_QUERY,
+//     variables: allPostsQueryVars,
+//   })
+
+//   return {
+//     props: {
+//       initialApolloState: apolloClient.cache.extract(),
+//     },
+//     unstable_revalidate: 1,
+//   }
+// }
