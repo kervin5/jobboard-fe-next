@@ -10,7 +10,7 @@ import {
   createMuiTheme,
 } from "@material-ui/core/styles";
 import { ApolloProvider } from "@apollo/client";
-import { useApollo } from "../lib/apolloClient";
+import { useApollo } from "@/lib/apolloClient";
 // import MainLayout from "@/compmponents/layout/main";
 // import AdminLayout from "@/compmponents/layout/admin";
 
