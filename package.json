@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "postinstall": "rm -rf node_modules/@types/react-native"
   },
   "dependencies": {
     "@apollo/react-hooks": "3.1.3",
