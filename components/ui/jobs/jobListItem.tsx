@@ -26,7 +26,7 @@ const jobListItem = (props: any) => {
   const { job } = props;
 
   return (
-    <Grid item xs={12}>
+    <Grid item xs={12} className="jobListItem">
       <CardActionArea component="a" href="#">
         <Card className={classes.card}>
           <div className={classes.cardDetails}>
