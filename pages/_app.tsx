@@ -9,7 +9,7 @@ import {
   ThemeProvider as MaterialThemeProvider,
   createMuiTheme,
 } from "@material-ui/core/styles";
-import { ApolloProvider } from "@apollo/react-hooks";
+import { ApolloProvider } from "@apollo/client";
 import { useApollo } from "../lib/apolloClient";
 // import MainLayout from "../components/layout/main";
 // import AdminLayout from "../components/layout/admin";

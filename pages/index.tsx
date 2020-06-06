@@ -6,6 +6,8 @@ import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import HeroSection from "../components/layout/elements/heroSection";
 import JobsList from "../components/ui/jobs/jobsList";
+import { initializeApollo } from "../lib/apolloClient";
+import { gql } from "@apollo/client";
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
@@ -34,7 +36,7 @@ const featuredPosts = [
 
 export default function HomePage(props: { children: ReactElement }) {
   const classes = useStyles();
-
+  console.log({ props });
   return (
     <>
       <HeroSection>
@@ -58,20 +60,39 @@ export default function HomePage(props: { children: ReactElement }) {
   );
 }
 
+export const ALL_POSTS_QUERY = gql`
+  query allPosts($first: Int!, $skip: Int!) {
+    allPosts(orderBy: createdAt_DESC, first: $first, skip: $skip) {
+      id
+      title
+      votes
+      url
+      createdAt
+    }
+    _allPostsMeta {
+      count
+    }
+  }
+`;
+
+export const allPostsQueryVars = {
+  skip: 0,
+  first: 10,
+};
 //DO NOT DELETE
 //static SSG
-// export async function getStaticProps() {
-//   const apolloClient = initializeApollo()
+export async function getStaticProps() {
+  const apolloClient = initializeApollo();
 
-//   await apolloClient.query({
-//     query: ALL_POSTS_QUERY,
-//     variables: allPostsQueryVars,
-//   })
+  await apolloClient.query({
+    query: ALL_POSTS_QUERY,
+    variables: allPostsQueryVars,
+  });
 
-//   return {
-//     props: {
-//       initialApolloState: apolloClient.cache.extract(),
-//     },
-//     unstable_revalidate: 1,
-//   }
-// }
+  return {
+    props: {
+      initialApolloState: apolloClient.cache.extract(),
+    },
+    unstable_revalidate: 1,
+  };
+}

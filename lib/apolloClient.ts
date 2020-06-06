@@ -1,18 +1,26 @@
 import { useMemo } from "react";
-import { ApolloClient } from "apollo-client";
-import { InMemoryCache, NormalizedCacheObject } from "apollo-cache-inmemory";
-import { HttpLink } from "apollo-link-http";
+import {
+  ApolloClient,
+  InMemoryCache,
+  NormalizedCacheObject,
+} from "@apollo/client";
 
 let apolloClient: ApolloClient<NormalizedCacheObject | null>;
 
 function createApolloClient() {
+  const isSSR = typeof window === "undefined";
+  const authorization = isSSR
+    ? ""
+    : window?.localStorage?.getItem("token") || "";
+
   const client = new ApolloClient({
-    ssrMode: typeof window === "undefined",
-    link: new HttpLink({
-      uri: "https://api.graph.cool/simple/v1/cixmkt2ul01q00122mksg82pn", // Server URL (must be absolute)
-      credentials: "same-origin", // Additional fetch() options like `credentials` or `headers`
-    }),
+    ssrMode: isSSR,
+    uri: "https://api.graph.cool/simple/v1/cixmkt2ul01q00122mksg82pn",
+    credentials: "same-origin",
     cache: new InMemoryCache(),
+    headers: {
+      authorization,
+    },
   });
   return client;
 }
