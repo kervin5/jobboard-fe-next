@@ -49,9 +49,7 @@ export default function HomePage(props: { children: ReactElement }) {
         </Link>
       </HeroSection>
       <Container maxWidth="md">
-        <Grid container spacing={4}>
-          <JobsList jobs={featuredPosts} />
-        </Grid>
+        <JobsList jobs={featuredPosts} />
         <Grid container spacing={5} className={classes.mainGrid}>
           {/* <Main title="From the firehose" posts={posts} /> */}
         </Grid>
