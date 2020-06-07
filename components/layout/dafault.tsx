@@ -10,7 +10,7 @@ const StyledDefaultLayout = styled.div`
   padding-top: ${(props) => props.theme.spacing(8)}px;
 `;
 
-export default function defaultLayout(props: { children: ReactElement }) {
+const defaultLayout: React.FC = (props) => {
   return (
     <StyledDefaultLayout className="defaultLayout">
       <Header />
@@ -21,4 +21,6 @@ export default function defaultLayout(props: { children: ReactElement }) {
       />
     </StyledDefaultLayout>
   );
-}
+};
+
+export default defaultLayout;

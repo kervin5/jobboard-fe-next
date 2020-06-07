@@ -1,6 +1,7 @@
 import React, { ComponentClass } from "react";
 import Head from "next/head";
 import DefaultLayout from "@/components/layout/dafault";
+import AdminLayout from "@/components/layout/admin";
 import {
   ThemeProvider as StyledThemeProvider,
   createGlobalStyle,
@@ -62,18 +63,11 @@ export default function App({
     }
   }, []);
 
-  // if (router.pathname.startsWith("/dashboard")) {
-  //   return (
-  //     <ThemeProvider theme={theme}>
-  //       <GlobalStyle />
-  //       {/* <AdminLayout> */}
-  //       <ApolloProvider client={apolloClient}>
-  //         <Component {...pageProps}></Component>
-  //       </ApolloProvider>
-  //       {/* </AdminLayout> */}
-  //     </ThemeProvider>
-  //   );
-  // }
+  const PageLayout = getPageLayoutComponent(
+    router.pathname,
+    DefaultLayout,
+    AdminLayout
+  );
 
   return (
     <StyledThemeProvider theme={theme}>
@@ -83,11 +77,19 @@ export default function App({
         </Head>
         <GlobalStyle />
         <ApolloProvider client={apolloClient}>
-          <DefaultLayout>
+          <PageLayout>
             <Component {...pageProps}></Component>
-          </DefaultLayout>
+          </PageLayout>
         </ApolloProvider>
       </MaterialThemeProvider>
     </StyledThemeProvider>
   );
+}
+
+function getPageLayoutComponent(
+  route: string,
+  defaultLayout: React.FC,
+  adminLayout: React.FC
+) {
+  return route.startsWith("/admin") ? adminLayout : defaultLayout;
 }
