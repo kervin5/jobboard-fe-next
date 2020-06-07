@@ -8,7 +8,7 @@ import {
   Label,
   ResponsiveContainer,
 } from "recharts";
-import Title from "./title";
+import Title from "@/components/ui/typography/cardTitle";
 
 // Generate Sales Data
 function createData(time: any, amount: any) {
