@@ -20,10 +20,35 @@ import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Link from "@material-ui/core/Link";
-import styled from "styled-components";
+import clsx from "clsx";
+
+const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    topNavBar: {
+      backgroundColor: theme.palette.common.white,
+      boxShadow: "none",
+      color: theme.palette.text.primary,
+      borderBottom: `2px solid
+        ${theme.palette.background.default}`,
+      zIndex: theme.zIndex.drawer + 1,
+      transition: theme.transitions.create(["width", "margin"], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+    },
+    appBarShift: {
+      marginLeft: drawerWidth,
+      width: `calc(100% - ${drawerWidth}px)`,
+      transition: theme.transitions.create(["width", "margin"], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+    },
+    menuButtonHidden: {
+      display: "none",
+    },
     grow: {
       flexGrow: 1,
     },
@@ -92,18 +117,17 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const StyledTopNavBar = styled.div`
-  flex-grow: 1;
-  .MuiAppBar-root {
-    background-color: ${(props) => props.theme.palette.common.white};
-    box-shadow: none;
-    color: ${(props) => props.theme.palette.text.primary};
-    border-bottom: 2px solid
-      ${(props) => props.theme.palette.background.default};
-  }
-`;
+interface ITopNavBar {
+  open?: boolean;
+  hamburgerOnClick?: any;
+  hideHamburger?: boolean;
+}
 
-export default function PrimarySearchAppBar() {
+const topNavBar: React.FC<ITopNavBar> = ({
+  open = false,
+  hamburgerOnClick = () => null,
+  hideHamburger = false,
+}) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [
@@ -189,14 +213,25 @@ export default function PrimarySearchAppBar() {
   );
 
   return (
-    <StyledTopNavBar className="TopNavBar">
-      <AppBar position="fixed">
+    <>
+      <AppBar
+        position="fixed"
+        className={clsx(
+          classes.grow,
+          classes.topNavBar,
+          open && classes.appBarShift
+        )}
+      >
         <Toolbar>
           <IconButton
             edge="start"
-            className={classes.menuButton}
+            className={clsx(
+              classes.menuButton,
+              (open || hideHamburger) && classes.menuButtonHidden
+            )}
             color="inherit"
             aria-label="open drawer"
+            onClick={hamburgerOnClick}
           >
             <MenuIcon />
           </IconButton>
@@ -221,7 +256,7 @@ export default function PrimarySearchAppBar() {
           <nav>
             <Link
               variant="button"
-              color="textPrimary"
+              color="inherit"
               href="#"
               className={classes.link}
             >
@@ -229,7 +264,7 @@ export default function PrimarySearchAppBar() {
             </Link>
             <Link
               variant="button"
-              color="textPrimary"
+              color="inherit"
               href="#"
               className={classes.link}
             >
@@ -281,6 +316,8 @@ export default function PrimarySearchAppBar() {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
-    </StyledTopNavBar>
+    </>
   );
-}
+};
+
+export default topNavBar;

@@ -5,6 +5,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Drawer from "@material-ui/core/Drawer";
 import Box from "@material-ui/core/Box";
 import AppBar from "@material-ui/core/AppBar";
+import TopNavBar from "@/components/ui/navigation/topNavBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
@@ -131,7 +132,7 @@ export default function Dashboard() {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar
+      {/* <AppBar
         position="absolute"
         className={clsx(classes.appBar, open && classes.appBarShift)}
       >
@@ -163,7 +164,8 @@ export default function Dashboard() {
             </Badge>
           </IconButton>
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
+      <TopNavBar hamburgerOnClick={handleDrawerOpen} open={open} />
       <Drawer
         variant="permanent"
         classes={{
