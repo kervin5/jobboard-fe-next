@@ -34,8 +34,12 @@ const useStyles = makeStyles((theme) => ({
     overflow: "auto",
   },
   container: {
-    paddingTop: theme.spacing(4),
+    paddingTop: 0,
+
     paddingBottom: theme.spacing(4),
+  },
+  contentGrid: {
+    marginTop: 0,
   },
 }));
 
@@ -54,18 +58,18 @@ const adminLayout: React.FC = ({ children }) => {
       <CssBaseline />
       <TopNavBar hamburgerOnClick={handleDrawerOpen} open={open} />
       <SideDrawer open={open} chevronOnClick={handleDrawerClose} />
-      <main className={classes.content}>
+      <div className={classes.content}>
         <div className={classes.appBarSpacer} />
         <AdminHeader />
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
+        <Container className={classes.container} maxWidth="xl">
+          <Grid container spacing={3} className={classes.contentGrid}>
             {children}
           </Grid>
           <Box pt={4}>
             <Copyright />
           </Box>
         </Container>
-      </main>
+      </div>
     </div>
   );
 };
