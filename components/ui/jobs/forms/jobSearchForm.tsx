@@ -50,7 +50,6 @@ export default function jobSearchForm() {
               label="Job title or keywords"
               name="email"
               autoComplete="email"
-              autoFocus
               size="small"
               className={classes.input}
             />
