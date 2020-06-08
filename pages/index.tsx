@@ -4,9 +4,10 @@ import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
-import HeroSection from "@/components/layout/elements/heroSection";
-import JobsList from "@/components/ui/jobs/jobsList";
 import { initializeApollo } from "@/lib/apolloClient";
+import JobSearchForm from "@/components/ui/jobs/forms/jobSearchForm";
+import JobsList from "@/components/ui/jobs/jobsList";
+import HeroSection from "@/components/layout/elements/heroSection";
 import { gql } from "@apollo/client";
 
 const useStyles = makeStyles((theme) => ({
@@ -41,14 +42,13 @@ export default function HomePage(props: { children: ReactElement }) {
     <>
       <HeroSection>
         <Typography component="h1" variant="h3" color="inherit" gutterBottom>
-          WHat's going on
+          Find the job of your dreams
         </Typography>
         <Typography variant="h5" color="inherit" paragraph>
           Some amazing description
         </Typography>
-        <Link variant="subtitle1" href="#">
-          The explanation
-        </Link>
+
+        <JobSearchForm />
       </HeroSection>
       <Container maxWidth="md">
         <JobsList jobs={featuredPosts} />
