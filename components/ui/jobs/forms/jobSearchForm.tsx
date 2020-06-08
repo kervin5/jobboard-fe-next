@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
     borderBottomLeftRadius: 0,
   },
   input: {
+    marginBottom: theme.spacing(2),
     "& .MuiOutlinedInput-notchedOutline": {
       border: "none",
     },
