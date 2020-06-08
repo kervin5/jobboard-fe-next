@@ -1,4 +1,5 @@
 import React from "react";
+import NextLink from "next/link";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -17,6 +18,7 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import Link from "@material-ui/core/Link";
 import clsx from "clsx";
 import { drawerWidth } from "./sideDrawer";
+import localization from "@/languages/locale";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,8 +26,8 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: theme.palette.common.white,
       boxShadow: "none",
       color: theme.palette.text.primary,
-      borderBottom: `2px solid
-        ${theme.palette.background.default}`,
+      borderBottom: `1px solid
+       ${theme.palette.divider}`,
       zIndex: theme.zIndex.drawer + 1,
       transition: theme.transitions.create(["width", "margin"], {
         easing: theme.transitions.easing.sharp,
@@ -230,7 +232,9 @@ const topNavBar: React.FC<ITopNavBar> = ({
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            Material-UI
+            <NextLink href="/" passHref>
+              <Link>{localization().config.company}</Link>
+            </NextLink>
           </Typography>
 
           <div className={classes.search}>
@@ -238,7 +242,7 @@ const topNavBar: React.FC<ITopNavBar> = ({
               <SearchIcon />
             </div>
             <InputBase
-              placeholder="Search…"
+              placeholder={`${localization().ui.search}…`}
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
@@ -248,29 +252,31 @@ const topNavBar: React.FC<ITopNavBar> = ({
           </div>
           <div className={classes.grow} />
           <nav>
+            <NextLink href="/admin/dashboard" passHref>
+              <Link
+                variant="button"
+                color="inherit"
+                href="#"
+                className={classes.link}
+              >
+                {localization().navigation.links.dashboard}
+              </Link>
+            </NextLink>
             <Link
               variant="button"
               color="inherit"
               href="#"
               className={classes.link}
             >
-              Features
+              {localization().navigation.links.search}
             </Link>
             <Link
               variant="button"
-              color="inherit"
-              href="#"
-              className={classes.link}
-            >
-              Enterprise
-            </Link>
-            <Link
-              variant="button"
               href="#"
               className={classes.link}
               color="inherit"
             >
-              Support
+              {localization().navigation.links.support}
             </Link>
           </nav>
           <div className={classes.sectionDesktop}>

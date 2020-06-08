@@ -2,12 +2,13 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Box from "@material-ui/core/Box";
-import TopNavBar from "@/components/ui/navigation/topNavBar";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
-import SideDrawer, { drawerWidth } from "@/components/ui/navigation/sideDrawer";
+import TopNavBar from "@/components/ui/navigation/topNavBar";
+import SideDrawer from "@/components/ui/navigation/sideDrawer";
+import AdminHeader from "@/components/layout/elements/adminHeader";
 
 function Copyright() {
   return (
@@ -55,6 +56,7 @@ const adminLayout: React.FC = ({ children }) => {
       <SideDrawer open={open} chevronOnClick={handleDrawerClose} />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
+        <AdminHeader />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             {children}
